@@ -1,0 +1,27 @@
+.rightPart>h4 {
+    color: white;
+    font-size: 0.9375;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 100;
+    letter-spacing: 1px;
+}
+
+.priceOne {
+    color: #2EBD85;
+}
+
+.priceTwo {
+    color: #F6465D;
+}
+
+@media screen and (max-width: 580px) {
+    .rightPart> :nth-child(3) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 410px) {
+    .rightPart > :nth-child(2) {
+        display: none;
+    }
+}

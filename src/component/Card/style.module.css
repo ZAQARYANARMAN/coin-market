@@ -1,0 +1,56 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px;
+    padding: 13px 10px;
+}
+
+.container:hover {
+    background-color: rgba(128, 128, 128, 0.142);
+}
+
+.leftPart {
+    /* background-color: blue; */
+    width: min-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.coinSymbol {
+    color: white;
+    font-size: 0.9375rem;
+    font-family: sans-serif;
+    font-weight: 500;
+}
+
+.coinName {
+    color: #848E9C;
+    font-size: 0.8125rem;
+    font-family: sans-serif;
+    font-weight: 100;
+    margin-bottom: 4px;
+}
+
+.container> :nth-child(2) {
+    width: min-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+}
+
+@media screen and (max-width: 670px) {
+    .container > :nth-child(2) {
+        gap: 40px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .container > :nth-child(2) {
+        gap: 30px;
+    }
+}

@@ -1,0 +1,18 @@
+.container {
+    align-items: center;
+}
+
+.topContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    gap: 20px;
+}
+
+.topContainer > h2 {
+    color: white;
+    font-size: 1.25rem;
+    font-family: sans-serif;
+    font-weight: 100;
+}
