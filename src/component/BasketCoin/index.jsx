@@ -14,6 +14,7 @@ function BasketCoins({ element }) {
     const [ubdatedPurchasedCoins, setUbdatedPurchasedCoins] = useRecoilState(purchasedCoins);
     const [ubdatedWallet, setUbdatedWallet] = useRecoilState(wallet);
     const [animations, setAnimations] = useState([]);
+    const [isAllowed, setIsAllowed] = useState(true);
 
     const deletedCoins = (action) => {
         const fakeBasketCoins = JSON.parse(JSON.stringify(ubdateBasketCoins));
@@ -38,26 +39,29 @@ function BasketCoins({ element }) {
     }
 
     const buy = (event) => {
-        const icon = event.currentTarget;
+        if (isAllowed) {
+            setIsAllowed(false);
+            const icon = event.currentTarget;
 
-        if (ubdateBasketCoins[element.name].price <= ubdatedWallet) {
-            const fakeBuyCoin = {}
-            fakeBuyCoin[element.name] = JSON.parse(JSON.stringify(ubdateBasketCoins[element.name]));
-            if (ubdatedPurchasedCoins[element.name]) {
-                fakeBuyCoin[element.name] = { ...ubdatedPurchasedCoins[element.name] };
-                fakeBuyCoin[element.name].price += ubdateBasketCoins[element.name].price;
-                fakeBuyCoin[element.name].count += ubdateBasketCoins[element.name].count;
+            if (ubdateBasketCoins[element.name].price <= ubdatedWallet) {
+                const fakeBuyCoin = {}
+                fakeBuyCoin[element.name] = JSON.parse(JSON.stringify(ubdateBasketCoins[element.name]));
+                if (ubdatedPurchasedCoins[element.name]) {
+                    fakeBuyCoin[element.name] = { ...ubdatedPurchasedCoins[element.name] };
+                    fakeBuyCoin[element.name].price += ubdateBasketCoins[element.name].price;
+                    fakeBuyCoin[element.name].count += ubdateBasketCoins[element.name].count;
+                }
+
+                icon.style.color = "green"
+                triggerAnimation(animations, setAnimations, element.image, "10px", "48.5%", window.innerWidth * 85 / 100)
+                setUbdatedPurchasedCoins({ ...ubdatedPurchasedCoins, ...fakeBuyCoin })
+                setTimeout(() => deletedCoins(), 900)
+            } else {
+                icon.style.color = "rgba(220, 20, 60, 0.85)";
             }
 
-            icon.style.color = "green"
-            triggerAnimation(animations, setAnimations, element.image, "10px", "48.5%", window.innerWidth * 85 / 100)
-            setUbdatedPurchasedCoins({ ...ubdatedPurchasedCoins, ...fakeBuyCoin })
-            setTimeout(() => deletedCoins(), 900)
-        } else {
-            icon.style.color = "rgba(220, 20, 60, 0.85)";
+            setTimeout(() => icon.style.color = "white", 700);
         }
-
-        setTimeout(() => icon.style.color = "white", 700);
     }
 
     return (

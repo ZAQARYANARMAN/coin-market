@@ -1,4 +1,5 @@
 .rightPart>h4 {
+    width: max-content;
     color: white;
     font-size: 0.9375rem;
     font-family: 'Space Grotesk', sans-serif;

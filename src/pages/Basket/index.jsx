@@ -13,6 +13,7 @@ function Basket() {
     const [ubdatedPurchasedCoins, setUbdatedPurchasedCoins] = useRecoilState(purchasedCoins);
     const [ubdateWallet, setUbdatedWallet] = useRecoilState(wallet);
     const [generalPrice, setGeneralPrice] = useState(0);
+    const [isAllowed, setIsAllowed] = useState(true);
 
     useEffect(() => {
         let generalPriceSum = 0;
@@ -20,30 +21,34 @@ function Basket() {
         setGeneralPrice(generalPriceSum);
     }, [ubdateBasketCoins])
 
-    const clear = (event, action) => setUbdateBasketCoins({});
+    const clear = () => setUbdateBasketCoins({});
 
     const buyCoins = (event) => {
-        const icon = event.currentTarget;
-        if (generalPrice <= ubdateWallet) {
-            const fakeUbdatedBasketCoins = JSON.parse(JSON.stringify(ubdateBasketCoins));
-            const fakeUbdatedPurchasedCoins = JSON.parse(JSON.stringify(ubdatedPurchasedCoins));
+        if (isAllowed) {
+            const icon = event.currentTarget;
+            if (generalPrice <= ubdateWallet) {
+                console.log("hell world")
+                setIsAllowed(false)
+                const fakeUbdatedBasketCoins = JSON.parse(JSON.stringify(ubdateBasketCoins));
+                const fakeUbdatedPurchasedCoins = JSON.parse(JSON.stringify(ubdatedPurchasedCoins));
 
-            Object.values(fakeUbdatedBasketCoins).forEach(element => {
-                if (fakeUbdatedPurchasedCoins[element.name]) {
-                    fakeUbdatedPurchasedCoins[element.name].count += fakeUbdatedBasketCoins[element.name].count;
-                    fakeUbdatedPurchasedCoins[element.name].price += fakeUbdatedBasketCoins[element.name].price;
-                } else {
-                    fakeUbdatedPurchasedCoins[element.name] = fakeUbdatedBasketCoins[element.name];
-                }
-            })
-            
-            icon.style.color = "green";
-            setUbdatedPurchasedCoins(fakeUbdatedPurchasedCoins);
-            setTimeout(() => clear("hello"), 700);
-        } else {
-            icon.style.color = "rgba(220, 20, 60, 0.85)";
+                Object.values(fakeUbdatedBasketCoins).forEach(element => {
+                    if (fakeUbdatedPurchasedCoins[element.name]) {
+                        fakeUbdatedPurchasedCoins[element.name].count += fakeUbdatedBasketCoins[element.name].count;
+                        fakeUbdatedPurchasedCoins[element.name].price += fakeUbdatedBasketCoins[element.name].price;
+                    } else {
+                        fakeUbdatedPurchasedCoins[element.name] = fakeUbdatedBasketCoins[element.name];
+                    }
+                })
+
+                icon.style.color = "green";
+                setUbdatedPurchasedCoins(fakeUbdatedPurchasedCoins);
+                setTimeout(() => clear(), 700);
+            } else {
+                icon.style.color = "rgba(220, 20, 60, 0.85)";
+            }
+            setTimeout(() => icon.style.color = "white", 700);
         }
-        setTimeout(() => icon.style.color = "white", 700);
     }
 
     return (
